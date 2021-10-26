@@ -38,7 +38,8 @@ RUN cd /tmp && \
 	curl -fsSL https://deb.nodesource.com/setup_${NODE_RELEASE}.x | sudo -E bash - && \
 	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
 	echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
-	apt update && apt install -y nodejs yarn
+	apt update && apt install -y nodejs yarn && \
+	cd /etc/alternatives && ln -sf /usr/bin/php${PHP_RELEASE} php
 
 # PHP Packages
 RUN apt-get -y --no-install-recommends install \
@@ -55,7 +56,7 @@ RUN apt-get -y --no-install-recommends install \
 	php${PHP_RELEASE}-curl \
 	php${PHP_RELEASE}-zip \
 	php${PHP_RELEASE}-json \
-	&& cd /etc/alternatives && ln -sf /usr/bin/php${PHP_RELEASE} php
+	php${PHP_RELEASE}-yaml
 
 # CLEAN
 RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*

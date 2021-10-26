@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+. config.docker
 
-TAG=${1:-"node14-php-fpm74-cron"}
+TAG=${TAG:-"latest"}
 
-docker build -f Dockerfile --tag ${TAG}:latest .
+docker build --rm -f Dockerfile --tag "${VENDOR}/${IMAGE}:${TAG}" .
 
